@@ -1,5 +1,7 @@
 package com.ifpr.backend.model;
 
+import java.util.UUID;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,17 +13,13 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Usuario {
+public class Perfil {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
-    @NotBlank(message = "Nome Obrigatório")
-    @Size(min = 5, message = "Insira o nome completo")
-    private String nome;
-
-    @Email(message = "Insira o email válido")
-    private String email;
-    private String senha;
+    @NotBlank(message = "Descrição Obrigatório")
+    @Size(min = 5, message = "Insira a descrição completa")
+    private String descricao;
 }
