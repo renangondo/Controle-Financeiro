@@ -30,7 +30,7 @@ public class UsuarioService {
     }
 
     public void remover(Long id) {
-        repository.deleteById(id);;
+        repository.deleteById(id);
     }
 
     public Usuario alterar(Usuario usuario) {
