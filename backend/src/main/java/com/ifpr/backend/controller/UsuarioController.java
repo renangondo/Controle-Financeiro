@@ -57,4 +57,13 @@ public class UsuarioController {
         Usuario usuarioDB = service.alterar(usuario);
         return ResponseEntity.ok(usuarioDB);
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<Usuario> login(@RequestBody Usuario usuario) {
+    Usuario usuarioDB = service.login(
+            usuario.getEmail(),
+            usuario.getSenha()
+        );
+        return ResponseEntity.ok(usuarioDB);
+    }
 }

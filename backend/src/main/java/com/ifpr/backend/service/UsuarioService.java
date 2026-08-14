@@ -39,6 +39,16 @@ public class UsuarioService {
         usuarioDb.setEmail(usuario.getEmail());
 
         return repository.save(usuarioDb);
-
     }
+
+    public Usuario login(String email, String senha) {
+        Usuario usuario = repository.findByEmail(email).orElseThrow(() -> new  RuntimeException("Email ou senha inválidos"));
+
+        if (!usuario.getSenha().equals(senha)) {
+            throw new RuntimeException("Email ou senha inválidos");
+        }
+        return usuario;
+    }
+
+    
 }
