@@ -8,6 +8,8 @@ import {
 
 import Login from './pages/Login/Login';
 import Cadastro from './pages/Cadastro/Cadastro';
+import Dashboard from './pages/Dashboard/Dashboard';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
 
@@ -30,7 +32,9 @@ function App() {
                 <Route
                     path="/"
                     element={
-                        <h1>Controle Financeiro</h1>
+                        <PrivateRoute>
+                            <Dashboard />
+                        </PrivateRoute>
                     }
                 />
 
