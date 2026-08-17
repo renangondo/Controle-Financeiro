@@ -1,0 +1,73 @@
+.pagina-lancamentos {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.cabecalho-lancamentos {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.seletor-periodo {
+    display: flex;
+    gap: 10px;
+}
+
+.card-formulario {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.06);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+}
+
+.card-formulario .p-inputtext,
+.card-formulario .p-inputnumber-input {
+    height: 44px;
+}
+
+.campo-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tabela-lancamentos {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,.06);
+}
+
+.etiqueta-status {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.etiqueta-status.pago {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.etiqueta-status.pendente {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.rodape-total {
+    align-self: flex-end;
+    display: flex;
+    gap: 10px;
+    font-size: 1.1rem;
+    color: #1e3a8a;
+}

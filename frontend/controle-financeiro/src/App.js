@@ -9,6 +9,9 @@ import {
 import Login from './pages/Login/Login';
 import Cadastro from './pages/Cadastro/Cadastro';
 import Dashboard from './pages/Dashboard/Dashboard';
+import ContasPagar from './pages/ContasPagar/ContasPagar';
+import ContasReceber from './pages/ContasReceber/ContasReceber';
+import Layout from './components/Layout/Layout';
 import PrivateRoute from './components/PrivateRoute';
 
 function App() {
@@ -19,31 +22,22 @@ function App() {
 
             <Routes>
 
-                <Route
-                    path="/login"
-                    element={<Login />}
-                />
+                <Route path="/login" element={<Login />} />
+                <Route path="/cadastro" element={<Cadastro />} />
 
                 <Route
-                    path="/cadastro"
-                    element={<Cadastro />}
-                />
-
-                <Route
-                    path="/"
                     element={
                         <PrivateRoute>
-                            <Dashboard />
+                            <Layout />
                         </PrivateRoute>
                     }
-                />
+                >
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="/contas-pagar" element={<ContasPagar />} />
+                    <Route path="/contas-receber" element={<ContasReceber />} />
+                </Route>
 
-                <Route
-                    path="*"
-                    element={
-                        <Navigate to="/login" />
-                    }
-                />
+                <Route path="*" element={<Navigate to="/login" />} />
 
             </Routes>
 

@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import com.ifpr.backend.model.Lancamento;
 import com.ifpr.backend.model.ResumoMensal;
 import com.ifpr.backend.model.TipoLancamento;
+import com.ifpr.backend.model.Usuario;
 import com.ifpr.backend.repository.LancamentoRepository;
+import com.ifpr.backend.repository.UsuarioRepository;
 
 @Service
 public class LancamentoService {
@@ -17,7 +19,13 @@ public class LancamentoService {
     @Autowired
     private LancamentoRepository repository;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     public Lancamento inserir(Lancamento lancamento) {
+        Usuario usuario = usuarioRepository.findById(lancamento.getUsuario().getId())
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        lancamento.setUsuario(usuario);
         return repository.save(lancamento);
     }
 
@@ -31,8 +39,7 @@ public class LancamentoService {
     }
 
     public void remover(Long id) {
-        Lancamento lancamento = buscarPorId(id);
-        repository.delete(lancamento);
+        repository.delete(buscarPorId(id));
     }
 
     public Lancamento alterar(Lancamento lancamento) {
@@ -62,8 +69,6 @@ public class LancamentoService {
                 .map(Lancamento::getValor)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        BigDecimal saldo = totalReceitas.subtract(totalDespesas);
-
-        return new ResumoMensal(totalReceitas, totalDespesas, saldo);
+        return new ResumoMensal(totalReceitas, totalDespesas, totalReceitas.subtract(totalDespesas));
     }
 }

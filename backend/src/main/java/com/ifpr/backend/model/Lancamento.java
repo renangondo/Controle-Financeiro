@@ -47,5 +47,14 @@ public class Lancamento {
     @JoinColumn(name = "id_usuario")
     @NotNull(message = "Usuário obrigatório")
     private Usuario usuario;
+
+    public Object getDescricao() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getDescricao'");
+    }
+
+    public void setDescricao(Object descricao) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
     
