@@ -36,3 +36,35 @@
     transform: rotate(360deg);
   }
 }
+
+.p-dropdown-panel {
+    border-radius: 12px !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,.15) !important;
+    overflow: hidden;
+    min-width: 170px !important;
+}
+
+.p-dropdown-items {
+    padding: 6px;
+}
+
+.p-dropdown-item {
+    border-radius: 8px !important;
+    padding: 10px 14px !important;
+    margin-bottom: 2px;
+    line-height: 1.3;
+}
+
+.p-dropdown-item:last-child {
+    margin-bottom: 0;
+}
+
+.p-dropdown-item:hover {
+    background: #eef3fb !important;
+}
+
+.p-dropdown-item.p-highlight {
+    background: #2563eb !important;
+    color: #fff !important;
+}
+

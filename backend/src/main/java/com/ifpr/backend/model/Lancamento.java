@@ -1,7 +1,5 @@
 package com.ifpr.backend.model;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -22,10 +20,10 @@ public class Lancamento {
     private Long id;
 
     @NotBlank(message= "Descrição obrigatorio")
-    private  String descrico;
+    private  String descricao;
 
     @NotNull(message= "Valor Obrigatório")
-    private BigDecimal valor; 
+    private Double valor; 
 
     @Enumerated(EnumType.STRING)
     @NotNull(message= "Tipo obrigatório (DESPESA ou RECEITA)")
@@ -48,13 +46,7 @@ public class Lancamento {
     @NotNull(message = "Usuário obrigatório")
     private Usuario usuario;
 
-    public Object getDescricao() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getDescricao'");
-    }
 
-    public void setDescricao(Object descricao) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+
 }
     

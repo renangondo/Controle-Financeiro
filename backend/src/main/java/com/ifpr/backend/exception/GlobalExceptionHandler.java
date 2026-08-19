@@ -12,14 +12,16 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ErroResposta> tratarRuntimeException(RuntimeException ex) {
+        public ResponseEntity<ErroResposta> tratarRuntimeException(RuntimeException ex) {
+            ex.printStackTrace(); // temporário, só para descobrir a causa raiz
+
         ErroResposta erro = new ErroResposta(
-                HttpStatus.NOT_FOUND.value(),
-                ex.getMessage(),
-                LocalDateTime.now());
+            HttpStatus.NOT_FOUND.value(),
+            ex.getMessage(),
+            LocalDateTime.now());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(erro);
-    }
+}
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErroResposta> tratarValidacao(MethodArgumentNotValidException ex) {

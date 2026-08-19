@@ -36,7 +36,7 @@ const ContasPagar = () => {
         setCarregando(true);
         setErro('');
         try {
-            const resposta = await lancamentoService.listarPorMes(usuario.id, mes, ano);
+            const resposta = await lancamentoService.listarPorMes(usuario.id, 'DESPESA', mes, ano);
             setLancamentos(resposta.data);
         } catch (e) {
             setErro('Não foi possível carregar as contas a pagar.');

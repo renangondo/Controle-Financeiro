@@ -5,12 +5,12 @@ class LancamentoService extends BaseService {
         super('/lancamento');
     }
 
-    async listarPorMes(usuarioId, mes, ano) {
+    async listarPorMes(usuarioId, tipo, mes, ano) {
         const resposta = await this.api.get(this.endPoint, {
-            params: { usuarioId, mes, ano }
+            params: { usuarioId, tipo, mes, ano }
         });
         return resposta;
-    }
+}
 
     async buscarResumo(usuarioId, mes, ano) {
         const resposta = await this.api.get(`${this.endPoint}/resumo`, {

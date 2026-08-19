@@ -71,3 +71,25 @@
     font-size: 1.1rem;
     color: #1e3a8a;
 }
+
+.tabela-lancamentos .p-datatable-thead > tr > th {
+    padding: 14px 18px;
+    background: #f8fafc;
+    color: #1e3a8a;
+    font-size: .85rem;
+}
+
+.tabela-lancamentos .p-datatable-tbody > tr > td {
+    padding: 14px 18px;
+    border-bottom: 1px solid #eef3fb;
+}
+
+.tabela-lancamentos .p-datatable-tbody > tr:last-child > td {
+    border-bottom: none;
+}
+
+.tabela-lancamentos .p-button.p-button-text {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+}

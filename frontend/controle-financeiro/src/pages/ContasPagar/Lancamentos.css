@@ -14,7 +14,32 @@
 
 .seletor-periodo {
     display: flex;
+    align-items: center;
     gap: 10px;
+}
+
+.seletor-periodo .p-dropdown {
+    min-width: 150px;
+    height: 44px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    display: flex;
+    align-items: center;
+}
+
+.seletor-periodo .p-dropdown-label {
+    display: flex;
+    align-items: center;
+    padding: 0 14px;
+}
+
+.seletor-periodo .p-inputnumber-input {
+    width: 90px;
+    height: 44px;
+    border-radius: 10px;
+    border: 1px solid #d1d5db;
+    text-align: center;
+    font-size: 15px;
 }
 
 .card-formulario {

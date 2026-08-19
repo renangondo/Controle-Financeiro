@@ -1,6 +1,5 @@
 package com.ifpr.backend.service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,16 +58,20 @@ public class LancamentoService {
     public ResumoMensal calcularResumo(Long usuarioId, Integer mes, Integer ano) {
         List<Lancamento> lancamentos = listarPorMes(usuarioId, mes, ano);
 
-        BigDecimal totalReceitas = lancamentos.stream()
-                .filter(l -> l.getTipo() == TipoLancamento.RECEITA)
-                .map(Lancamento::getValor)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        double totalReceitas = lancamentos.stream()
+            .filter(l -> l.getTipo() == TipoLancamento.RECEITA)
+            .mapToDouble(Lancamento::getValor)
+            .sum();
 
-        BigDecimal totalDespesas = lancamentos.stream()
-                .filter(l -> l.getTipo() == TipoLancamento.DESPESA)
-                .map(Lancamento::getValor)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        double totalDespesas = lancamentos.stream()
+            .filter(l -> l.getTipo() == TipoLancamento.DESPESA)
+            .mapToDouble(Lancamento::getValor)
+            .sum();
 
-        return new ResumoMensal(totalReceitas, totalDespesas, totalReceitas.subtract(totalDespesas));
+        return new ResumoMensal(totalReceitas, totalDespesas, totalReceitas - totalDespesas);
+    }
+
+    public List<Lancamento> listarPorMesETipo(Long usuarioId, TipoLancamento tipo, Integer mes, Integer ano) {
+        return repository.findByUsuarioIdAndTipoAndMesAndAnoOrderByDescricaoAsc(usuarioId, tipo, mes, ano);
     }
 }
