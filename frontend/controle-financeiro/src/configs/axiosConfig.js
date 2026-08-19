@@ -9,8 +9,8 @@ const api = axios.create({
 
 api.interceptors.request.use(
     (config) => {
-        const token = localStorage.getItem('app-token');
-        const usuario = JSON.parse(localStorage.getItem('usuario') || 'null');
+        const token = sessionStorage.getItem('app-token');
+        const usuario = JSON.parse(sessionStorage.getItem('usuario') || 'null');
         const tokenUsuario = usuario?.token;
 
         if (token || tokenUsuario) {

@@ -23,7 +23,7 @@ const meses = [
 const lancamentoVazio = { descricao: '', valor: null, pago: false, parcelaAtual: null, totalParcelas: null };
 
 const ContasPagar = () => {
-    const usuario = JSON.parse(localStorage.getItem('usuario') || 'null');
+    const usuario = JSON.parse(sessionStorage.getItem('usuario') || 'null');
 
     const [mes, setMes] = useState(hoje.getMonth() + 1);
     const [ano, setAno] = useState(hoje.getFullYear());

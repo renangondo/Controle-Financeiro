@@ -269,6 +269,96 @@
     margin-bottom: 15px;
 }
 
+.grade-dashboard {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.painel-grafico,
+.painel-pendentes,
+.painel-acoes {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.06);
+}
+
+.painel-grafico h3,
+.painel-pendentes h3,
+.painel-acoes h3 {
+    color: #1e3a8a;
+    font-size: 1rem;
+    margin-bottom: 16px;
+}
+
+.texto-vazio {
+    color: #94a3b8;
+    font-size: .9rem;
+}
+
+.lista-pendentes {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 320px;
+    overflow-y: auto;
+}
+
+.lista-pendentes li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.lista-pendentes li:hover {
+    background: #eef3fb;
+}
+
+.descricao-pendente {
+    display: block;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.etiqueta-tipo {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: .72rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+}
+
+.etiqueta-tipo.despesa {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.etiqueta-tipo.receita {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.acoes-rapidas {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+    .grade-dashboard {
+        grid-template-columns: 1fr;
+    }
+}
+
 @media (max-width: 768px) {
     .cards-resumo {
         flex-direction: column;

@@ -8,7 +8,7 @@ import { Message } from 'primereact/message';
 
 import UsuarioService from '../../services/UsuarioService';
 
-import './Login.css';
+import '../Autenticacao.css';
 
 const usuarioService = new UsuarioService();
 
@@ -42,27 +42,15 @@ const Login = () => {
 
             const resposta = await usuarioService.login(usuario);
 
-            console.log('Login realizado:', resposta.data);
+            sessionStorage.setItem('usuario', JSON.stringify(resposta.data));
 
-            // Salva o usuário no navegador
-            localStorage.setItem(
-                'usuario',
-                JSON.stringify(resposta.data)
-            );
-
-            // Depois vamos utilizar o token aqui
             if (resposta.data.token) {
-                localStorage.setItem(
-                    'app-token',
-                    resposta.data.token
-                );
+                sessionStorage.setItem('app-token', resposta.data.token);
             }
 
             navigate('/');
 
         } catch (erroLogin) {
-
-            console.error(erroLogin);
 
             const mensagem =
                 erroLogin?.response?.data?.mensagem ||
@@ -81,35 +69,22 @@ const Login = () => {
 
         <div className="pagina-autenticacao">
 
-            <Card
-                title="Login"
-                className="cartao-autenticacao"
-            >
+            <Card title="Login" className="cartao-autenticacao">
 
-                <form
-                    onSubmit={realizarLogin}
-                    className="formulario-autenticacao"
-                >
+                <form onSubmit={realizarLogin} className="formulario-autenticacao">
 
-                    <span className="p-float-label">
-
+                    <div className="campo-formulario">
+                        <label htmlFor="login-email">Email</label>
                         <InputText
                             id="login-email"
                             name="email"
                             value={usuario.email}
                             onChange={handleChange}
-                            className="w-full"
                         />
+                    </div>
 
-                        <label htmlFor="login-email">
-                            Email
-                        </label>
-
-                    </span>
-
-
-                    <span className="p-float-label">
-
+                    <div className="campo-formulario">
+                        <label htmlFor="login-password">Senha</label>
                         <Password
                             id="login-password"
                             name="senha"
@@ -117,43 +92,21 @@ const Login = () => {
                             onChange={handleChange}
                             feedback={false}
                             toggleMask
-                            className="w-full"
                             inputClassName="w-full"
                         />
+                    </div>
 
-                        <label htmlFor="login-password">
-                            Senha
-                        </label>
-
-                    </span>
-
-
-                    {erro && (
-                        <Message
-                            severity="error"
-                            text={erro}
-                        />
-                    )}
-
+                    {erro && <Message severity="error" text={erro} />}
 
                     <Button
                         type="submit"
                         label="Entrar"
-                        className="w-full"
                         loading={carregando}
                     />
 
-
                     <div className="links-autenticacao">
-
-                        <span>
-                            Ainda não possui uma conta?
-                        </span>
-
-                        <Link to="/cadastro">
-                            Criar cadastro
-                        </Link>
-
+                        <span>Ainda não possui uma conta? </span>
+                        <Link to="/cadastro">Criar cadastro</Link>
                     </div>
 
                 </form>

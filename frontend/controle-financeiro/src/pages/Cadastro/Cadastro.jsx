@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Card } from 'primereact/card';
@@ -7,7 +6,7 @@ import { Password } from 'primereact/password';
 import { Button } from 'primereact/button';
 import { Message } from 'primereact/message';
 import UsuarioService from '../../services/UsuarioService';
-import './Cadastro.css';
+import '../Autenticacao.css';
 
 const usuarioService = new UsuarioService();
 
@@ -31,7 +30,6 @@ const Cadastro = () => {
         try {
             await usuarioService.inserir(usuario);
             setSucesso('Cadastro realizado com sucesso.');
-
         } catch (erroCadastro) {
             const mensagem =
                 erroCadastro?.response?.data?.mensagem ||
@@ -40,41 +38,39 @@ const Cadastro = () => {
         } finally {
             setCarregando(false);
         }
-
     };
 
     const handleChange = (e) => {
         setUsuario({ ...usuario, [e.target.name]: e.target.value });
-    }
-
+    };
 
     return (
         <div className="pagina-autenticacao">
             <Card title="Novo Cadastro" className="cartao-autenticacao">
                 <form onSubmit={realizarCadastro} className="formulario-autenticacao">
-                    <span className="p-float-label">
+
+                    <div className="campo-formulario">
+                        <label htmlFor="register-name">Nome</label>
                         <InputText
                             id="register-name"
                             name="nome"
                             value={usuario.nome}
                             onChange={handleChange}
-                            className="w-full"
                         />
-                        <label htmlFor="register-name">Nome</label>
-                    </span>
+                    </div>
 
-                    <span className="p-float-label">
+                    <div className="campo-formulario">
+                        <label htmlFor="register-email">Email</label>
                         <InputText
                             id="register-email"
                             name="email"
                             value={usuario.email}
                             onChange={handleChange}
-                            className="w-full"
                         />
-                        <label htmlFor="register-email">Email</label>
-                    </span>
+                    </div>
 
-                    <span className="p-float-label">
+                    <div className="campo-formulario">
+                        <label htmlFor="register-password">Senha</label>
                         <Password
                             id="register-password"
                             name="senha"
@@ -82,13 +78,12 @@ const Cadastro = () => {
                             onChange={handleChange}
                             feedback={false}
                             toggleMask
-                            className="w-full"
                             inputClassName="w-full"
                         />
-                        <label htmlFor="register-password">Senha</label>
-                    </span>
+                    </div>
 
-                    <span className="p-float-label">
+                    <div className="campo-formulario">
+                        <label htmlFor="register-confirm-password">Confirmar senha</label>
                         <Password
                             id="register-confirm-password"
                             name="confirmacaoSenha"
@@ -96,11 +91,9 @@ const Cadastro = () => {
                             onChange={handleChange}
                             feedback={false}
                             toggleMask
-                            className="w-full"
                             inputClassName="w-full"
                         />
-                        <label htmlFor="register-confirm-password">Confirmar senha</label>
-                    </span>
+                    </div>
 
                     {erro && <Message severity="error" text={erro} />}
                     {sucesso && <Message severity="success" text={sucesso} />}
@@ -108,7 +101,6 @@ const Cadastro = () => {
                     <Button
                         type="submit"
                         label="Cadastrar"
-                        className="w-full"
                         loading={carregando}
                     />
 
@@ -120,4 +112,4 @@ const Cadastro = () => {
         </div>
     );
 };
-export default Cadastro
+export default Cadastro;

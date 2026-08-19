@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ifpr.backend.model.Lancamento;
 import com.ifpr.backend.model.ResumoMensal;
+import com.ifpr.backend.model.ResumoPeriodo;
 import com.ifpr.backend.model.TipoLancamento;
 import com.ifpr.backend.service.LancamentoService;
 
@@ -63,5 +64,20 @@ public class LancamentoController {
     public ResponseEntity<Void> remover(@PathVariable("id") Long id) {
         service.remover(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/pendentes")
+        public ResponseEntity<List<Lancamento>> pendentes(
+            @RequestParam Long usuarioId,
+            @RequestParam Integer mes,
+            @RequestParam Integer ano) {
+        return ResponseEntity.ok(service.listarPendentes(usuarioId, mes, ano));
+    }
+
+    @GetMapping("/historico")
+        public ResponseEntity<List<ResumoPeriodo>> historico(
+            @RequestParam Long usuarioId,
+            @RequestParam(defaultValue = "6") Integer meses) {
+        return ResponseEntity.ok(service.calcularHistorico(usuarioId, meses));
     }
 }

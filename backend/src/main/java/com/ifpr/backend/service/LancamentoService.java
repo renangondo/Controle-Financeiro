@@ -1,5 +1,7 @@
 package com.ifpr.backend.service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ifpr.backend.model.Lancamento;
 import com.ifpr.backend.model.ResumoMensal;
+import com.ifpr.backend.model.ResumoPeriodo;
 import com.ifpr.backend.model.TipoLancamento;
 import com.ifpr.backend.model.Usuario;
 import com.ifpr.backend.repository.LancamentoRepository;
@@ -73,5 +76,30 @@ public class LancamentoService {
 
     public List<Lancamento> listarPorMesETipo(Long usuarioId, TipoLancamento tipo, Integer mes, Integer ano) {
         return repository.findByUsuarioIdAndTipoAndMesAndAnoOrderByDescricaoAsc(usuarioId, tipo, mes, ano);
+    }
+
+    public List<Lancamento> listarPendentes(Long usuarioId, Integer mes, Integer ano) {
+        return listarPorMes(usuarioId, mes, ano).stream()
+            .filter(l -> !l.isPago())
+            .toList();
+    }   
+
+    public List<ResumoPeriodo> calcularHistorico(Long usuarioId, int quantidadeMeses) {
+        List<ResumoPeriodo> resultado = new ArrayList<>();
+        LocalDate hoje = LocalDate.now();
+
+        for (int i = quantidadeMeses - 1; i >= 0; i--) {
+            LocalDate referencia = hoje.minusMonths(i);
+            ResumoMensal resumo = calcularResumo(usuarioId, referencia.getMonthValue(), referencia.getYear());
+            resultado.add(new ResumoPeriodo(
+                referencia.getMonthValue(),
+                referencia.getYear(),
+                resumo.totalReceitas(),
+                resumo.totalDespesas(),
+                resumo.saldo()
+            ));
+        }
+
+    return resultado;
     }
 }

@@ -31,8 +31,8 @@ const Layout = () => {
     const [menuAberto, setMenuAberto] = useState(false);
 
     const sair = () => {
-        localStorage.removeItem('usuario');
-        localStorage.removeItem('app-token');
+        sessionStorage.removeItem('usuario');
+        sessionStorage.removeItem('app-token');
         navigate('/login');
     };
 
