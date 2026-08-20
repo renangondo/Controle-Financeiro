@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ifpr.backend.model.Lancamento;
+import com.ifpr.backend.model.ResumoCategoria;
 import com.ifpr.backend.model.ResumoMensal;
 import com.ifpr.backend.model.ResumoPeriodo;
 import com.ifpr.backend.model.TipoLancamento;
@@ -79,5 +80,14 @@ public class LancamentoController {
             @RequestParam Long usuarioId,
             @RequestParam(defaultValue = "6") Integer meses) {
         return ResponseEntity.ok(service.calcularHistorico(usuarioId, meses));
+    }
+
+    @GetMapping("/por-categoria")
+        public ResponseEntity<List<ResumoCategoria>> porCategoria(
+            @RequestParam Long usuarioId,
+            @RequestParam TipoLancamento tipo,
+            @RequestParam Integer mes,
+            @RequestParam Integer ano) {
+        return ResponseEntity.ok(service.calcularPorCategoria(usuarioId, tipo, mes, ano));
     }
 }

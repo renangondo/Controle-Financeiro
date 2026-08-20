@@ -1,0 +1,61 @@
+.pagina-categorias {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card-formulario-categoria {
+    background: #fff;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.06);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.seletor-cor {
+    width: 46px;
+    height: 44px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    cursor: pointer;
+    padding: 2px;
+}
+
+.lista-categorias {
+    background: #fff;
+    border-radius: 14px;
+    padding: 10px 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.06);
+}
+
+.item-categoria {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid #eef3fb;
+}
+
+.item-categoria:last-child {
+    border-bottom: none;
+}
+
+.bolinha-cor {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.nome-categoria {
+    flex: 1;
+    font-weight: 600;
+    color: #1e293b;
+}
+
+.texto-vazio {
+    color: #94a3b8;
+    padding: 15px 0;
+}

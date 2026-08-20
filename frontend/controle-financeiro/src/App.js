@@ -11,6 +11,8 @@ import Cadastro from './pages/Cadastro/Cadastro';
 import Dashboard from './pages/Dashboard/Dashboard';
 import ContasPagar from './pages/ContasPagar/ContasPagar';
 import ContasReceber from './pages/ContasReceber/ContasReceber';
+import Categorias from './pages/Categorias/Categorias';
+import Relatorios from './pages/Relatorios/Relatorios';
 import Layout from './components/Layout/Layout';
 import PrivateRoute from './components/PrivateRoute';
 
@@ -35,6 +37,8 @@ function App() {
                     <Route path="/" element={<Dashboard />} />
                     <Route path="/contas-pagar" element={<ContasPagar />} />
                     <Route path="/contas-receber" element={<ContasReceber />} />
+                    <Route path="/categorias" element={<Categorias />} />
+                    <Route path="/relatorios" element={<Relatorios />} />
                 </Route>
 
                 <Route path="*" element={<Navigate to="/login" />} />

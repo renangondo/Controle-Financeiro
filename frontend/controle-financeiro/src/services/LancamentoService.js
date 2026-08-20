@@ -31,6 +31,13 @@ class LancamentoService extends BaseService {
         });
     return resposta;
     }
+
+    async buscarPorCategoria(usuarioId, tipo, mes, ano) {
+        const resposta = await this.api.get(`${this.endPoint}/por-categoria`, {
+            params: { usuarioId, tipo, mes, ano }
+        });
+        return resposta;
+    }
 }
 
 export default LancamentoService;

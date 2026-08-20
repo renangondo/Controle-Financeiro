@@ -46,6 +46,10 @@ public class Lancamento {
     @NotNull(message = "Usuário obrigatório")
     private Usuario usuario;
 
+    @ManyToOne
+    @JoinColumn(name = "id_categoria")
+    private Categoria categoria;
+
 
 
 }

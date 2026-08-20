@@ -8,9 +8,11 @@ import { DataTable } from 'primereact/datatable';
 import { Column } from 'primereact/column';
 import { Message } from 'primereact/message';
 import LancamentoService from '../../services/LancamentoService';
+import CategoriaService from '../../services/CategoriaService';
 import './Lancamentos.css';
 
 const lancamentoService = new LancamentoService();
+const categoriaService = new CategoriaService();
 const hoje = new Date();
 
 const meses = [
@@ -20,7 +22,9 @@ const meses = [
     { label: 'Outubro', value: 10 }, { label: 'Novembro', value: 11 }, { label: 'Dezembro', value: 12 }
 ];
 
-const lancamentoVazio = { descricao: '', valor: null, pago: false, parcelaAtual: null, totalParcelas: null };
+const lancamentoVazio = {
+    descricao: '', valor: null, pago: false, parcelaAtual: null, totalParcelas: null, categoriaId: null
+};
 
 const ContasPagar = () => {
     const usuario = JSON.parse(sessionStorage.getItem('usuario') || 'null');
@@ -28,15 +32,24 @@ const ContasPagar = () => {
     const [mes, setMes] = useState(hoje.getMonth() + 1);
     const [ano, setAno] = useState(hoje.getFullYear());
     const [lancamentos, setLancamentos] = useState([]);
+    const [categorias, setCategorias] = useState([]);
     const [carregando, setCarregando] = useState(false);
     const [erro, setErro] = useState('');
     const [novoLancamento, setNovoLancamento] = useState(lancamentoVazio);
+
+    // Busca as categorias do usuário uma vez, quando a página abre
+    useEffect(() => {
+        categoriaService.listarPorUsuario(usuario.id)
+            .then((resposta) => setCategorias(resposta.data))
+            .catch((e) => console.error(e));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const carregarLancamentos = async () => {
         setCarregando(true);
         setErro('');
         try {
-            const resposta = await lancamentoService.listarPorMes(usuario.id, 'RECEITA', mes, ano);
+            const resposta = await lancamentoService.listarPorMes(usuario.id, 'DESPESA', mes, ano);
             setLancamentos(resposta.data);
         } catch (e) {
             setErro('Não foi possível carregar as contas a pagar.');
@@ -59,15 +72,17 @@ const ContasPagar = () => {
         try {
             await lancamentoService.inserir({
                 ...novoLancamento,
-                tipo: 'RECEITA',
+                tipo: 'DESPESA',
                 mes,
                 ano,
-                usuario: { id: usuario.id }
+                usuario: { id: usuario.id },
+                categoria: novoLancamento.categoriaId ? { id: novoLancamento.categoriaId } : null
             });
             setNovoLancamento(lancamentoVazio);
             carregarLancamentos();
         } catch (e) {
-            setErro('Não foi possível salvar a conta.');
+            const mensagem = e?.response?.data?.mensagem || 'Não foi possível salvar a conta.';
+            setErro(mensagem);
         }
     };
 
@@ -112,6 +127,14 @@ const ContasPagar = () => {
                     value={novoLancamento.descricao}
                     onChange={(e) => setNovoLancamento({ ...novoLancamento, descricao: e.target.value })}
                 />
+                <Dropdown
+                    placeholder="Categoria (opcional)"
+                    value={novoLancamento.categoriaId}
+                    options={categorias.map((c) => ({ label: c.nome, value: c.id }))}
+                    onChange={(e) => setNovoLancamento({ ...novoLancamento, categoriaId: e.value })}
+                    showClear
+                    style={{ minWidth: '180px' }}
+                />
                 <InputNumber
                     placeholder="Valor"
                     value={novoLancamento.valor}
@@ -138,7 +161,7 @@ const ContasPagar = () => {
                         onChange={(e) => setNovoLancamento({ ...novoLancamento, pago: e.checked })}
                         inputId="pago"
                     />
-                    <label htmlFor="pago">Já recebido</label>
+                    <label htmlFor="pago">Já pago</label>
                 </div>
                 <Button label="Adicionar" icon="pi pi-plus" onClick={adicionarLancamento} />
             </div>
@@ -152,13 +175,14 @@ const ContasPagar = () => {
                 emptyMessage="Nenhuma conta cadastrada neste mês."
             >
                 <Column field="descricao" header="Descrição" />
+                <Column header="Categoria" body={(l) => l.categoria?.nome || '-'} />
                 <Column header="Parcela" body={(l) => (l.totalParcelas ? `${l.parcelaAtual}/${l.totalParcelas}` : '-')} />
                 <Column header="Valor" body={(l) => `R$ ${l.valor.toFixed(2).replace('.', ',')}`} />
                 <Column
                     header="Status"
                     body={(l) => (
                         <span
-                            className={`etiqueta-status ${l.pago ? 'Recebido' : 'A receber'}`}
+                            className={`etiqueta-status ${l.pago ? 'pago' : 'pendente'}`}
                             onClick={() => alternarPago(l)}
                         >
                             {l.pago ? 'Pago' : 'Pendente'}
